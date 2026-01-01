@@ -15,12 +15,24 @@ import './App.css'
 class App extends Component {
   state = {
     cartList: [],
+    paymentMethod: '',
+    orderPlaced: false,
   }
 
   //   TODO: Add your code for remove all cart items, increment cart item quantity, decrement cart item quantity, remove cart item
+  setPaymentMethod = method => {
+    this.setState({paymentMethod: method})
+  }
+
+  setOrderPlaced = () => {
+    this.setState({orderPlaced: true})
+  }
+
+  resetPayment = () => {
+    this.setState({paymentMethod: '', orderPlaced: false})
+  }
 
   addCartItem = product => {
-    
     //   TODO: Update the code here to implement addCartItem
     const {cartList} = this.state
     const productFound = cartList.find(item => item.id === product.id)
@@ -74,12 +86,17 @@ class App extends Component {
   }
 
   render() {
-    const {cartList} = this.state
+    const {cartList, paymentMethod, orderPlaced} = this.state
 
     return (
       <CartContext.Provider
         value={{
           cartList,
+          paymentMethod,
+          orderPlaced,
+          setPaymentMethod: this.setPaymentMethod,
+          setOrderPlaced: this.setOrderPlaced,
+          resetPayment: this.resetPayment,
           addCartItem: this.addCartItem,
           removeCartItem: this.removeCartItem,
           incrementCartItemQuantity: this.incrementCartItemQuantity,
